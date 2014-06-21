@@ -28,8 +28,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#define GLEW_STATIC// needed for GLEW to be linked statically...?
-#include <glew.h>//needed for buffer creation and GLints -- also in Game.cpp
+#define GLEW_STATIC
+#include <GL/glew.h>//needed for buffer creation and GLints -- also found in Game.cpp
 #include "Vertex.h"
 class Mesh
 {

@@ -19,11 +19,17 @@
 # THE SOFTWARE.
 
 cmake_minimum_required(VERSION 2.8)
+
 #define the project name and type
-project(LWGLGF CXX)
+project(LWGLGF)
+
+#set file path for custom Find*.cmake modules
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${LWGLGF_SOURCE_DIR}/cmake/")
+
 #set the project version number
 set(LWGLGF_VERSION_MAJOR 0)
 set(LWGLGF_VERSION_MINOR 1)
 set(LWGLGF_VERSION_PATCH 0)
+
 #everything else is processed in here
 add_subdirectory(${LWGLGF_SOURCE_DIR}/src)

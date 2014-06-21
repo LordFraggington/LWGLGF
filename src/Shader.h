@@ -22,8 +22,8 @@
 #pragma once
 #ifndef SHADER_H
 #define SHADER_H
-#define GLEW_STATIC// needed for GLEW to be linked statically...?
-#include <glew.h>//needed for buffer creation and GLints -- also in Game and Mesh
+#define GLEW_STATIC// needed for GLEW to be linked statically
+#include <GL/glew.h>//needed for buffer creation and GLints -- also in Game and Mesh
 class Shader
 {
     public:

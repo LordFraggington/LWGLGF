@@ -25,7 +25,7 @@
 int main(void)
 {
 	Game* game = new Game();
-	game->~Game();//just so we are explicitly cleaning up -- do we need to?
+	game->~Game();//explicitly cleaning up after successful execution
 	exit(EXIT_SUCCESS);
 }
 //******** END "GLOBAL" STUFF ************************************
@@ -53,39 +53,17 @@ void Game::error_callback(int error, const char* description)
 
 void Game::initializeOpenGL()
 {
-	//test Lua here to ensure we don't crash something -- move later?
-	int numSamples;
-	bool useAntiAliasing;
-	lua_State *L = luaL_newstate();//calling just lua_open() EXPLODES violently
-	luaL_openlibs(L);//load standard lua libs (kind of optional)
-	int loaded = luaL_dofile(L, "assets\\config.lua");// load the script (saving the returned flag to check for errors)
-	if(loaded == 1)//error
-	{
-		//TODO: handle file not found by generating a new script for next time and using default values
-		std::cout<<"no file found"<<std::endl;
-	}
-	//TODO: if the config file is bad, generate a new script for next time and use default values
-	lua_getglobal(L, "screenWidth");
-	if(lua_isnumber(L, 1))
-		width = (int)lua_tonumber(L,1);
-	lua_getglobal(L, "screenHeight");
-	if(lua_isnumber(L, 2))
-		height = (int)lua_tonumber(L,2);
-	lua_getglobal(L, "antiAliasing");
-	if(lua_isboolean(L, 3))
-		useAntiAliasing = lua_toboolean(L,3);
-	lua_getglobal(L, "numSamples");
-	if(lua_isnumber(L, 4))
-		numSamples = (int)lua_tonumber(L,4);
-	lua_pop(L, 4);//remove x elements from the stack
-	lua_close(L);
-	//delete L;
+	//temporary constants for window creation (Lua is temporarily removed, and some config file reading is needed)
+	int numSamples = 4;
+	bool useAntiAliasing = true;
+	width = 800;
+	height = 600;
 
-	//set hints for use with window creation -- technically optional
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);//GLFW_OPENGL_COMPAT_PROFILE <--what are you?!?
+	//set hints for use with window creation -- technically optional. TODO: what is GLFW_OPENGL_COMPAT_PROFILE
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	if(useAntiAliasing)
-		glfwWindowHint(GLFW_SAMPLES, numSamples); //Request ???x anti-aliasing
+		glfwWindowHint(GLFW_SAMPLES, numSamples); //Request _?_x anti-aliasing
 
 	/* Set the error callback - set as early as possible to catch anything when debugging */
 	glfwSetErrorCallback(this->error_callback);

@@ -22,20 +22,14 @@
 #pragma once
 #ifndef GAME_H
 #define GAME_H
-#include <stdio.h> //stderr
-#define GLEW_STATIC// needed for GLEW to be linked statically...?
-#include <glew.h>//included in Mesh as well; removing the include here will cause problems though...
-#include <glfw3.h>//window handling
-#include "ResourceManager.h"//contains Mesh, GameObject, Camera, and a ton of GLM references
+#include <stdio.h> //used to access stderr
+#define GLEW_STATIC// needed for GLEW to be linked statically
+#include <GL/glew.h>//included in Mesh as well; removing the include here will cause problems though...
+#include <GLFW/glfw3.h>//window handling
+#include "ResourceManager.h"//contains Mesh, GameObject, Camera, and GLM references
 #include <al.h>//OpenAL(-Soft)
 #include <alc.h>//AL context
-//lets embed Lua!
-extern "C"
-{
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-}
+
 class Game
 {
 	public:
@@ -63,7 +57,7 @@ class Game
 		Camera* camera;
 		Light* light;
 		GLuint demoShader;
-		/* Audio malarkey! */
+		/* Audio playback variables */
 		ALCdevice* audioDevice;
 		ALCcontext* audioDeviceContext;
 };
