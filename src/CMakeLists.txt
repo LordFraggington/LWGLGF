@@ -27,7 +27,7 @@ set(CMAKE_CXX_FLAGS "-o LWGLGF -std=c++11 -O0 -g3 -Wall -Wconversion -fmessage-l
 endif(WIN32)
 
 #force the "install" path to be the build folder -- CMake ignores the destination presently
-set(EXECUTABLE_OUTPUT_PATH ${LWGLGF_SOURCE_DIR}/build)
+#set(EXECUTABLE_OUTPUT_PATH ${LWGLGF_SOURCE_DIR}/build)
 
 #find the packages/directories we use should be using; alternatively, define the include/library directory variables here 
 find_package(OpenGL REQUIRED) #in Windows-land Cmake will complain (but still find/link the package), but you can't get it to compile an application utilizing OpenGL otherwise
@@ -51,14 +51,11 @@ else(WIN32)
 target_link_libraries(LWGLGF GL X11 Xrandr glfw3 GLEW openal)
 ENDIF(WIN32)
 
-#create "build" directory and dump all of our cool toys there -- hacking it for now (see set EXECUTABLE_OUTPUT_PATH)
+#create "build" directory and dump all of our cool toys there
 install(TARGETS LWGLGF RUNTIME DESTINATION ${LWGLGF_SOURCE_DIR}/build)
-#		DIRECTORY ${LWGLGF_SOURCE_DIR}/assets DESTINATION ${LWGLGF_SOURCE_DIR}/build
-#		DIRECTORY ${LWGLGF_SOURCE_DIR}/shaders DESTINATION ${LWGLGF_SOURCE_DIR}/build)
-
-#copy over any objs, shaders, and lua scripts, etc. into the /build subdirectory
-file(COPY ${LWGLGF_SOURCE_DIR}/assets DESTINATION ${LWGLGF_SOURCE_DIR}/build)
-file(COPY ${LWGLGF_SOURCE_DIR}/shaders DESTINATION ${LWGLGF_SOURCE_DIR}/build)
+#copy over any objs, shaders, etc. into the /build subdirectory
+install(DIRECTORY ${LWGLGF_SOURCE_DIR}/assets DESTINATION ${LWGLGF_SOURCE_DIR}/build)
+install(DIRECTORY ${LWGLGF_SOURCE_DIR}/shaders DESTINATION ${LWGLGF_SOURCE_DIR}/build)
 
 #Notes:
 #Remember the difference between MSVC compiled versus MinGW compiled libraries, etc.
