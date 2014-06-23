@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #include "GameEntity.h"
 
 GameEntity::~GameEntity(void)
@@ -29,10 +30,10 @@ GameEntity::GameEntity(glm::vec3 initialPosition, glm::vec3 initialRotation)
 :position(initialPosition)
 {
 	orientation = glm::quat();
-	glm::quat rotationX = glm::angleAxis(glm::radians(initialRotation.x), glm::vec3(1,0,0));
-	glm::quat rotationY = glm::angleAxis(glm::radians(initialRotation.y), glm::vec3(0,1,0));
-	glm::quat rotationZ = glm::angleAxis(glm::radians(initialRotation.z), glm::vec3(0,0,1));
-	orientation = rotationX * rotationY * rotationZ * orientation;//TODO: get this in the correct order/check order
+	glm::quat rotationX = glm::angleAxis(glm::radians(initialRotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+	glm::quat rotationY = glm::angleAxis(glm::radians(initialRotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::quat rotationZ = glm::angleAxis(glm::radians(initialRotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+	orientation = rotationZ * rotationY * rotationX * orientation;
 	CalculateLocalVectors();
 }
 
@@ -58,23 +59,23 @@ void GameEntity::Translate(glm::vec3 direction, float distance)
 
 void GameEntity::Pitch(float degrees)
 {
-	Rotate(glm::vec3(1,0,0), glm::radians(degrees), true);
+	Rotate(glm::vec3(1.0f, 0.0f ,0.0f), degrees, true);
 }
 
 void GameEntity::Yaw(float degrees)
 {
-	Rotate(glm::vec3(0,1,0), glm::radians(degrees), true);
+	Rotate(glm::vec3(0.0f, 1.0f, 0.0f), degrees, true);
 }
 
 void GameEntity::Roll(float degrees)
 {
-	Rotate(glm::vec3(0,0,1), glm::radians(degrees), true);
+	Rotate(glm::vec3(0.0f, 0.0f, 1.0f), degrees, true);
 }
 
 void GameEntity::Rotate(glm::vec3 axis, float degrees,bool localSpace)
 {
-	/* Create a quaternion rotated around "axis" by "degrees", then normalize it and convert to a matrix */
 	glm::quat rotation = glm::angleAxis(glm::radians(degrees), glm::normalize(axis));
+	
 	if(localSpace)
 		orientation = rotation * orientation;
 	else
@@ -85,27 +86,13 @@ void GameEntity::Rotate(glm::vec3 axis, float degrees,bool localSpace)
 
 void GameEntity::CalculateLocalVectors()
 {
-	float x = orientation.x;
-	float y = orientation.y;
-	float z = orientation.z;
-	float w = orientation.w;
-
-	/* Derive the local axis vectors from the orientation quaternion. */
-	rightVector = glm::vec3(
-		1.0f - 2.0f * (y * y + z * z),
-		2.0f * (x * y - w * z),
-		2.0f * (x * z + w * y)
-	);
-
-	upVector = glm::vec3(
-		2.0f * (x * y + w * z),
-		1.0f - 2.0f * (x * x + z * z),
-		2.0f * (y * z - w * x)
-	);
-
-	forwardVector = glm::vec3(
-		2.0f * (x * z - w * y),
-		2.0f * (y * z + w * x),
-		1.0f - 2.0f * (x * x + y * y)
-	);
+	/* Derive the local axis vectors from the orientation quaternion. (need to streamline) */
+	glm::vec4 rVec = glm::toMat4(glm::angleAxis(glm::pitch(orientation), glm::vec3(1.0f, 0.0f, 0.0f))) * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+	rightVector = glm::vec3(rVec.x, rVec.y, rVec.z);
+	
+	glm::vec4 uVec = glm::toMat4(glm::angleAxis(glm::yaw(orientation), glm::vec3(0.0f, 1.0f, 0.0f))) * glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+	upVector = glm::vec3(uVec.x, uVec.y, uVec.z);
+	
+	glm::vec4 fVec = glm::toMat4(glm::angleAxis(glm::roll(orientation), glm::vec3(0.0f, 0.0f, 1.0f))) * glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
+	forwardVector = glm::vec3(fVec.x, fVec.y, fVec.z);
 }

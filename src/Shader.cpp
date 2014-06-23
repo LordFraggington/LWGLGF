@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #include "Shader.h"
 
 Shader::~Shader(void)
@@ -27,7 +28,8 @@ Shader::~Shader(void)
 Shader::Shader(void)
 {
 }
-Shader::Shader(GLuint shaderIndex):shaderProgram(shaderIndex)
+Shader::Shader(GLuint shaderIndex)
+:shaderProgram(shaderIndex)
 {
     uniViewProjMatrix = glGetUniformLocation(shaderProgram, "ViewProjMatrix");
     uniModelMatrix = glGetUniformLocation(shaderProgram, "ModelMatrix");

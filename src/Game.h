@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #pragma once
 #ifndef GAME_H
 #define GAME_H
@@ -42,21 +43,26 @@ class Game
 		void initializeGame();
 		void Update();
 		void Draw();
+		
 		/* GLFW callback in case something breaks (you COULD also do key callbacks but they get messy) */
 		static void error_callback(int error, const char* description);
+		
 		/* Screen variables */
 		GLFWwindow* window;
 		int width, height;
+		
 		/* Time variables */
 		double lastTime;
 		double currentTime;
 		double deltaTime;
+		
 		/*Game (Engine) objects */
 		ResourceManager* manager;
 		GameObject* test;
 		Camera* camera;
 		Light* light;
 		GLuint demoShader;
+		
 		/* Audio playback variables */
 		ALCdevice* audioDevice;
 		ALCcontext* audioDeviceContext;

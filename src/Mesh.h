@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #pragma once
 #ifndef MESH_H
 #define MESH_H
@@ -31,6 +32,7 @@
 #define GLEW_STATIC
 #include <GL/glew.h>//needed for buffer creation and GLints -- also found in Game.cpp
 #include "Vertex.h"
+
 class Mesh
 {
 	public:

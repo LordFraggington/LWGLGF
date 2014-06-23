@@ -19,14 +19,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #pragma once
 #ifndef MATERIAL_H
 #define MATERIAL_H
 #include "Shader.h"
+
 class Material
 {
     Material(wchar_t* texture_name = NULL, wchar_t* shader_name = NULL);
     ~Material(void);
+    
     //TODO: finish this class
     GLuint  currentTexture;
     Shader* currentShader;

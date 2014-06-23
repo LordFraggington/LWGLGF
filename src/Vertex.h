@@ -19,10 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #pragma once
 #ifndef VERTEX_H
 #define VERTEX_H
 #include <glm/glm.hpp>
+
 struct Vertex
 {
 	glm::vec2 uv;

@@ -19,8 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #include "Game.h"
 //#define DEBUG //uncomment for additional debug information
+
 //******** "GLOBAL" STUFF ****************************************
 int main(void)
 {
@@ -29,6 +31,7 @@ int main(void)
 	exit(EXIT_SUCCESS);
 }
 //******** END "GLOBAL" STUFF ************************************
+
 Game::~Game()
 {
 	/* Clean up game items */
@@ -36,10 +39,12 @@ Game::~Game()
 	camera->~Camera();
 	light->~Light();
 	manager->~ResourceManager();//shut everything down (eventually everything that is not part of glfw/openal will reside here)
+	
 	/* Close OpenAL first so sound isn't playing with no window (in case) */
 	alcMakeContextCurrent(NULL);
 	alcDestroyContext(audioDeviceContext);
 	alcCloseDevice(audioDevice);
+	
 	/*Close the Window */
 	glfwDestroyWindow(window);
 	glfwTerminate();
@@ -87,6 +92,7 @@ void Game::initializeOpenGL()
 
 	/* Ensures that all extensions with valid entry points will be exposed on experimental drivers */
 	glewExperimental = GL_TRUE;
+	
 	/* GLEW initialization */
 	GLenum err = glewInit();//the returned enum is either OK or an error
 	if (GLEW_OK != err)
@@ -99,8 +105,10 @@ void Game::initializeOpenGL()
 
 	/* Enable depth */
 	glEnable(GL_DEPTH_TEST);
+	
 	/* Accept fragment if it closer to the camera than the former one */
 	glDepthFunc(GL_LESS);
+	
 	/* Cull triangles with normals not facing towards the camera -- on by default(?) */
 	glEnable(GL_CULL_FACE);
 }
@@ -116,6 +124,7 @@ void Game::initializeOpenAL()
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
+	
 	audioDeviceContext = alcCreateContext(audioDevice, NULL);
 	if(!audioDeviceContext)
 	{
@@ -191,15 +200,20 @@ void Game::Draw()
 {
 	/* Check for resize */
 	glfwGetFramebufferSize(window, &width, &height);
+	
 	/* Handle window resize */
 	glViewport(0, 0, width, height);
+	
 	/* Update camera and recalculate aspect ratio - need to do something about this when camera management goes to ResourceManager (and multiple cams) */
 	camera->SetViewportSize(width, height);
+	
 	/* Clear the screen (and set a "default" background color) */
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	/* calculate this for each camera -- needed in the shader */
 	glm::mat4 ViewProjMatrix = camera->PerspectiveMatrix() * camera->ViewMatrix();
+	
 	/*draw things here -- need to create an actual "GameObject display list" loop for drawing purposes (see below) */
 	test->Draw(ViewProjMatrix);//TODO--this needs to go away
 
@@ -231,12 +245,16 @@ Game::Game()
 {
 	/* Anything pertaining to OpenGL set-up */
 	initializeOpenGL();
+	
 	/* Set up our audio device */
 	initializeOpenAL();
+	
 	/* Anything pertaining to the actual game initialization should be done here */
 	initializeGame();
+	
 	/* Get initial time for use in update speed computation */
 	lastTime = glfwGetTime();
+	
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -244,10 +262,13 @@ Game::Game()
 		currentTime = glfwGetTime();
 		deltaTime = currentTime - lastTime;
 		lastTime = currentTime;
+		
 		/* Update anything you need to in here*/
 		Update();
+		
 		/* Render here */
 		Draw();
+		
 		/* Poll for and process events */
 		glfwPollEvents();
 	}

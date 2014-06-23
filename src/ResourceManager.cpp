@@ -19,7 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #include "ResourceManager.h"
+
 //"initialize" the instance -- appears redundant at first, but necessary for the singleton to exist/function.
 ResourceManager* ResourceManager::instance = NULL;
 
@@ -54,13 +56,17 @@ Mesh* ResourceManager::CreateMesh(wchar_t* filename)
 	/* Retrieve Mesh name from file name (up until the '.') */
 	std::wstring file = filename;
 	file = file.substr(0,file.find('.'));
+	
 	/* Don't create the mesh if it already exists */
 	if(GetMesh(file.c_str()) != NULL)
 		return GetMesh(file.c_str());//this seems in-optimal
+	
 	/* ----create the new mesh------ */
 	Mesh* newMesh = new Mesh(filename);//remember: assigning buffers to mesh is done in the mesh constructor
+	
 	/* ----store mesh in map-------- */
 	meshMap[file]= newMesh;
+	
 	/*return current Mesh pointer (in case it is needed) */
 	return meshMap[file];
 }
@@ -77,16 +83,19 @@ GLint ResourceManager::CreateShaderProgram(wchar_t* programName,char* const shad
 {
 	if(GetShaderProgram(programName) != 0)
 		return GetShaderProgram(programName);
+	
 	/* A program "object" is an object to which shader objects can be attached. */
 	GLuint myProgram = glCreateProgram();
 	GLint vertShader = CreateVertexShader(shader1FileName);
 	GLint fragShader = CreateFragmentShader(shader2FileName);
 	glAttachShader( myProgram, vertShader);
 	glAttachShader( myProgram, fragShader);
+	
 	/* Link the program and clean up */
 	glLinkProgram(myProgram);
 	glDeleteShader(vertShader);
 	glDeleteShader(fragShader);
+	
 	/* Store the "pointer" for later */
 	shaderPairMap[programName] = myProgram;
 	return myProgram;

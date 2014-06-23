@@ -19,23 +19,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #pragma once
 #ifndef SHADER_H
 #define SHADER_H
 #define GLEW_STATIC// needed for GLEW to be linked statically
 #include <GL/glew.h>//needed for buffer creation and GLints -- also in Game and Mesh
+
 class Shader
 {
     public:
         Shader(void);
         Shader(GLuint shaderIndex);
         ~Shader(void);
+        
+        /* Shader Uniform Pointers */
         GLuint shaderProgram;
         GLint uniViewProjMatrix;
         GLint uniModelMatrix;
         GLint uniDirLight;//need to change this later
 
-        //Vertex Array Attribute Pointers
+        /*Vertex Array Attribute (VAO) Pointers */
         GLint uvAttrib;
         GLint colorAttrib;
         GLint normalAttrib;

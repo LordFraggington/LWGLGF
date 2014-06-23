@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #pragma once
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
@@ -26,11 +27,13 @@
 #include "GameObject.h"//Contains Mesh; need to create a display list for these in here
 #include "Camera.h"//need to put camera creation/management in here later -- game looks for camera HERE presently
 #include "Light.h"
+
 class ResourceManager
 {
 	public:
 	    static ResourceManager* Instance(void);
 		~ResourceManager(void);
+		
 		Mesh* CreateMesh(wchar_t* filename);
 		Mesh* GetMesh(const wchar_t* meshName);
 		GLint CreateShaderProgram(wchar_t* programName,char * const shader1FileName,char * const shader2FileName);
@@ -38,17 +41,21 @@ class ResourceManager
 
 	private:
 	    ResourceManager(void);
+	    
 	    //Prevent copies by making these constructors private (don't implement)
         ResourceManager(ResourceManager const&);
         void operator=(ResourceManager const&);
+        
         /* Shader creation helper functions */
 		GLint CreateVertexShader(char* const shaderFileName);
 		GLint CreateFragmentShader(char* const shaderFileName);
+		
 		/* Shader loading based on instructions from:
         http://stackoverflow.com/questions/7344640/getting-garbage-chars-when-reading-glsl-files */
 		void loadShader(GLuint shaderobject, char* const shadersourcefilename);
 		std::string loadFileToString(char const* const shaderfilename);
 		void glCppShaderSource(GLuint shader, std::string const &shader_string);
+        
         /* ResourceManager variables */
 	    static ResourceManager* instance;
 		std::map<std::wstring,Mesh*> meshMap;

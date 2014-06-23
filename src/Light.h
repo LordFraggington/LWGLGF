@@ -19,17 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #pragma once
 #ifndef LIGHT_H
 #define LIGHT_H
 #include "GameEntity.h"
+
 class Light : public GameEntity
 {
     //TODO: See if the intensities should change based on LightType
 	public:
 	    enum LightType{Ambient, Point, Directional, Spotlight};//TODO: Add volumetric; area lighting in most engines involves baking the lightmap...
+		
 		Light(LightType lightType = LightType::Ambient, glm::vec3 initialPosition = glm::vec3(0,0,0), glm::vec4 inColor = glm::vec4(1,1,1,1), glm::vec3 intensities = glm::vec3(1,1,1), float range = 0, float angle = 0, glm::vec3 initialRotation = glm::vec3(0,0,0));
 		~Light(void);
+        
         glm::vec3 Direction(); //returns the forward of the object; maybe be superfluous but not sure if the naming convention would be useful otherwise
 
 	private:

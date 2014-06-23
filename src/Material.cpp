@@ -19,11 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #include "Material.h"
 
 Material::~Material(void)
 {
 }
+
 Material::Material(wchar_t* texture_name, wchar_t* shader_name)
 {
     //TODO: finish texture creation

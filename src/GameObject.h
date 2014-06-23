@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+ 
 #pragma once
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
@@ -26,13 +27,16 @@
 #include "Mesh.h"
 #include "Material.h"//is this the right place for this
 #include <glm/gtc/type_ptr.hpp>//used for glm::value_ptr
+
 class GameObject : public GameEntity
 {
 	public:
 		GameObject(Mesh* aMesh = NULL, GLuint aShader = 0, glm::vec3 initialPosition = glm::vec3(0,0,0), glm::vec3 initialRotation = glm::vec3(0,0,0));//TODO: move shaders out of here
 		~GameObject(void);
-		void Draw(glm::mat4 matrix);
-		void SetShaderProgram(GLuint aShader);//because sometimes we want to swap/set shaders after construction -- should this be moved?
+		
+		void Draw(glm::mat4 matrix);//should be removed from the GameObject and handled in Game.Draw()
+		void SetShaderProgram(GLuint aShader);//to swap/set shaders after construction; should remove when material systemed is finish
+		
 		/* Universal/ Uniform Scale */
 		void Scale(GLfloat scaleFactor);
 		GLfloat CurrentScale();
@@ -42,8 +46,7 @@ class GameObject : public GameEntity
         Mesh* mesh;
         Material* currentMaterial;
 	private:
-		GLuint shaderProgram;// should a GameObject have access to this? in DirectX you set the shader(s) then just draw the items in the buffer...
+		GLuint shaderProgram;// should remove when the material system is finished
 		GLfloat currentScale;
-
 };
 #endif
