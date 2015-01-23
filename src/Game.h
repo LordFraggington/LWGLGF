@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, Clayton Andrews.
+ * Copyright 2014-2015, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
+
 #pragma once
 #ifndef GAME_H
 #define GAME_H
@@ -28,8 +28,6 @@
 #include <GL/glew.h>//included in Mesh as well; removing the include here will cause problems though...
 #include <GLFW/glfw3.h>//window handling
 #include "ResourceManager.h"//contains Mesh, GameObject, Camera, and GLM references
-#include <al.h>//OpenAL(-Soft)
-#include <alc.h>//AL context
 
 class Game
 {
@@ -39,32 +37,26 @@ class Game
 
 	private:
 		void initializeOpenGL();
-		void initializeOpenAL();
 		void initializeGame();
 		void Update();
 		void Draw();
-		
+
 		/* GLFW callback in case something breaks (you COULD also do key callbacks but they get messy) */
 		static void error_callback(int error, const char* description);
-		
+
 		/* Screen variables */
 		GLFWwindow* window;
 		int width, height;
-		
+
 		/* Time variables */
-		double lastTime;
-		double currentTime;
-		double deltaTime;
-		
-		/*Game (Engine) objects */
-		ResourceManager* manager;
-		GameObject* test;
-		Camera* camera;
-		Light* light;
-		GLuint demoShader;
-		
-		/* Audio playback variables */
-		ALCdevice* audioDevice;
-		ALCcontext* audioDeviceContext;
+		float lastTime, currentTime, deltaTime;
+
+    /*Game (Engine) objects live and die within here -- this is static, so technically we don't need a reference?... */
+    ResourceManager* manager;
+
+    /*...however, for this sample lets leave a couple references to these here for convienence as opposed to lookups*/
+    Camera* camera;
+
+		/* Audio playback variables to go here (?) */
 };
 #endif

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, Clayton Andrews.
+ * Copyright 2014 - 2015, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,18 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
+
 #pragma once
 #ifndef MATERIAL_H
 #define MATERIAL_H
 #include "Shader.h"
 
+//TODO: finish this class; namely, get texture loading working.
+//Also, change constructor to accept a texture array index (or texture pointer) as well as a shader program index/pointer
+
 class Material
 {
     Material(wchar_t* texture_name = NULL, wchar_t* shader_name = NULL);
     ~Material(void);
-    
-    //TODO: finish this class
+
     GLuint  currentTexture;
     Shader* currentShader;
 };

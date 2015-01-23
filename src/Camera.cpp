@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, Clayton Andrews.
+ * Copyright 2014-2015, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,71 +19,64 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
-#include "Camera.h"
 
-Camera::Camera(float width, float height, glm::vec3 initialPosition, glm::vec3 initialRotation, float fov, float nearClip, float farClip)
-:GameEntity(initialPosition, initialRotation), camFOV(fov), camFarClip(farClip), camNearClip(nearClip)
-{
-	SetViewportSize(width, height);
-	CalculateViewMatrix();
-}
+#include "Camera.h"
 
 Camera::~Camera(void)
 {
 }
 
+Camera::Camera(float width, float height, glm::vec3 initialPosition, glm::vec3 initialRotation, float fov, float nearClip, float farClip)
+:Transform(initialPosition, initialRotation), camFOV(fov), camFarClip(farClip), camNearClip(nearClip)
+{
+  SetViewportSize(width, height);
+  CalculateViewMatrix();
+}
+
+
 void Camera::SetViewportSize(float width, float height)
 {
-	//might need to have access to these values later
-	camWidth = width;
-	camHeight = height;
-	camAspectRatio =  camWidth / camHeight;
-	CalculatePerspectiveMatrix();
+  camWidth = width;
+  camHeight = height;
+  camAspectRatio =  camWidth / camHeight;
+  CalculatePerspectiveMatrix();
 }
 
 void Camera::Translate(glm::vec3 direction, float distance)
 {
-	position += direction * distance;
-	CalculateViewMatrix();
+  position += direction * distance;
+  CalculateViewMatrix();
 }
 
 void Camera::Rotate(glm::vec3 axis, float degrees,bool localSpace)
 {
-	glm::quat rotation = glm::angleAxis(glm::radians(degrees), glm::normalize(axis));
-	if(localSpace)
-		orientation = rotation * orientation;
-	else
-		orientation = orientation * rotation;
+  glm::quat rotation = glm::angleAxis(glm::radians(degrees), glm::normalize(axis));
+  if(localSpace)
+    orientation = rotation * orientation;
+    else
+      orientation = orientation * rotation;
 
-	CalculateLocalVectors();
-	CalculateViewMatrix();
-}
+      CalculateLocalVectors();
+      CalculateViewMatrix();
+    }
 
-glm::mat4 Camera::PerspectiveMatrix()
+    glm::mat4 Camera::PerspectiveMatrix()
+  {
+    return perspectiveMatrix;
+  }
+
+  glm::mat4 Camera::ViewMatrix()
 {
-	return perspectiveMatrix;
-}
-
-glm::mat4 Camera::ViewMatrix()
-{
-	return viewMatrix;
+  return viewMatrix;
 }
 
 void Camera::CalculatePerspectiveMatrix()
 {
-	perspectiveMatrix = glm::perspective(
-			glm::radians(camFOV),
-			camAspectRatio,
-			camNearClip,
-			camFarClip
-	);
+  perspectiveMatrix = glm::perspective(glm::radians(camFOV), camAspectRatio, camNearClip, camFarClip);
 }
 
 void Camera::CalculateViewMatrix()
 {
-	/* something about inverses that I cannot remember offhand said to
-	 * negate position - double check this */
-	glm::mat4 translationMatrix = glm::translate(glm::mat4(1), position);
-	viewMatrix = glm::toMat4(orientation) * translationMatrix;
+  glm::mat4 translationMatrix = glm::translate(glm::mat4(1), position);
+  viewMatrix = glm::toMat4(orientation) * translationMatrix;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, Clayton Andrews.
+ * Copyright 2014 - 2015, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
+
 #pragma once
 #ifndef MESH_H
 #define MESH_H
@@ -39,7 +39,7 @@ class Mesh
 		Mesh(wchar_t* filename);
 		Mesh(void);
 		~Mesh(void);
-		
+
 		/* The actual OpenGL Vertex Array Object and it's bound buffers */
 		GLuint vertexObject;
 		GLuint vertexBuffer;
@@ -52,7 +52,7 @@ class Mesh
 		//int normalCount;
 
 	private:
-		Vertex* vertexArray; //saved for collision volume/object generation 
+		Vertex* vertexArray; //saved for collision volume/object generation
 		GLuint* indexSequence; //really don't know if I need to keep this after creating the buffer
 };
 #endif

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, Clayton Andrews.
+ * Copyright 2014 - 2015, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,11 +54,18 @@ Mesh::Mesh(wchar_t* filename)
 
 	//create stream
 	std::wifstream aStream;
-	//witch-hackery to get my code to work with GCC/MinGW/me on Linux(wide strings/chars are fine in MSVC)
+	//open file to parse
+
+	//Uncomment when using MSVC
+	//aStream.open(filename);
+	//end of MSVC code
+
+	//Uncomment when working with with GCC/MinGW
 	char tempBuffer[std::char_traits<wchar_t>::length(filename)*2];
 	wcstombs(tempBuffer, filename, sizeof(tempBuffer));
-	//open file to parse
 	aStream.open(tempBuffer, std::ios_base::in);
+	//end of GCC/MinGW code
+
 	//see if we actually opened a file
 	if(aStream.is_open())
 	{
@@ -70,7 +77,7 @@ Mesh::Mesh(wchar_t* filename)
 			//get the stream for easier manipulation later on
 			std::wstringstream currentLineStream(currentLine);
 			//get all the data up until the first white-space (1 or 2 characters ultimately)
-			currentLineStream >> flag >> std::ws; 
+			currentLineStream >> flag >> std::ws;
 			//Vertices with (x,y,z[,w]) coordinates; w is optional and defaults to 1.0.
 			if(flag == L"v")
 			{
@@ -114,9 +121,9 @@ Mesh::Mesh(wchar_t* filename)
 					int a,b,c;// a is vertex index, b is texture coordinate/UV, c is normal
 					a = b = c = 0;
 					currentLineStream >> a;
-					if (currentLineStream.get() == '/') 
+					if (currentLineStream.get() == '/')
 					{
-						if (currentLineStream.peek() != '/') 
+						if (currentLineStream.peek() != '/')
 						{
 							currentLineStream >> b;
 							b--;

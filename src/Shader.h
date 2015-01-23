@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, Clayton Andrews.
+ * Copyright 2014 - 2015, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,30 +19,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
+
 #pragma once
 #ifndef SHADER_H
 #define SHADER_H
-#define GLEW_STATIC// needed for GLEW to be linked statically
+#define GLEW_STATIC
 #include <GL/glew.h>//needed for buffer creation and GLints -- also in Game and Mesh
+#include "Vertex.h"
+
+/*
+TODO:
+-need to change/remove UniDirLight and address all applicable; also need to determine how to calculate that/pass it to the shader
+*/
 
 class Shader
 {
-    public:
-        Shader(void);
-        Shader(GLuint shaderIndex);
-        ~Shader(void);
-        
-        /* Shader Uniform Pointers */
-        GLuint shaderProgram;
-        GLint uniViewProjMatrix;
-        GLint uniModelMatrix;
-        GLint uniDirLight;//need to change this later
+  public:
+    Shader(GLuint shaderIndex);
+    ~Shader(void);
 
-        /*Vertex Array Attribute (VAO) Pointers */
-        GLint uvAttrib;
-        GLint colorAttrib;
-        GLint normalAttrib;
-        GLint posAttrib;
+    /* Called whenever a GameObject "binds" a new shader, using that object's Mesh's VAO*/
+    void BindShaderAttribArrays(GLuint meshVAO);
+
+    /* Shader Uniform Pointers */
+    GLuint shaderProgram;
+    GLint uniViewProjMatrix;
+    GLint uniModelMatrix;
+    GLint uniDirLight;
+
+    /*Vertex Array Attribute (VAO) Pointers */
+    GLint uvAttrib;
+    GLint colorAttrib;
+    GLint normalAttrib;
+    GLint posAttrib;
+
+  private:
+    Shader(void);
 };
 #endif

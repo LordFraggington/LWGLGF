@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, Clayton Andrews.
+ * Copyright 2014 - 2015, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,34 +19,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
+
 #pragma once
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
-#include "GameEntity.h"
+#include "Transform.h"
 #include "Mesh.h"
-#include "Material.h"//is this the right place for this
+#include "Material.h"
 #include <glm/gtc/type_ptr.hpp>//used for glm::value_ptr
 
-class GameObject : public GameEntity
+/*
+TODO:
+-eliminate direct shader use by using materials
+-remove SetShader method and Shader pointer when material system is finished (currently used to swap/set shaders after construction)
+-in the long run, we should only actually be assigning a material in this constructor, not a shader, so get rid of the shader addressing there as well
+-Should rendering data be private? (doesn't seem to be a good idea)
+-Will the deconstructor here actually DO anything?
+*/
+
+class GameObject
 {
 	public:
-		GameObject(Mesh* aMesh = NULL, GLuint aShader = 0, glm::vec3 initialPosition = glm::vec3(0,0,0), glm::vec3 initialRotation = glm::vec3(0,0,0));//TODO: move shaders out of here
+		GameObject(Transform* aTransform = NULL, Mesh* aMesh = NULL, Shader* aShader = NULL);
 		~GameObject(void);
-		
-		void Draw(glm::mat4 matrix);//should be removed from the GameObject and handled in Game.Draw()
-		void SetShaderProgram(GLuint aShader);//to swap/set shaders after construction; should remove when material systemed is finish
-		
-		/* Universal/ Uniform Scale */
+
+		/* Universal/Uniform Scale */
 		void Scale(GLfloat scaleFactor);
 		GLfloat CurrentScale();
 		glm::mat4 CalculateModelMatrix();
 
-        //temporarily not private members as part of the imminent rendering change
-        Mesh* mesh;
-        Material* currentMaterial;
-	private:
-		GLuint shaderProgram;// should remove when the material system is finished
-		GLfloat currentScale;
+    void SetShader(Shader* aShader);
+
+    /* Variables */
+    /* Rendering data */
+    Mesh* mesh;
+    Shader* shader;
+    //Material* currentMaterial;
+
+    Transform* transform;
+
+  private:
+    GLfloat currentScale;
 };
 #endif

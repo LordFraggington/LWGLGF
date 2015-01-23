@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, Clayton Andrews.
+ * Copyright 2014 - 2015, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,15 +19,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
+
 #include "Shader.h"
 
 Shader::~Shader(void)
 {
+  glDeleteProgram(shaderProgram);
 }
-Shader::Shader(void)
+
+/* Specify the layout of the vertex data for passing to the shader */
+void Shader::BindShaderAttribArrays(GLuint meshVAO)
 {
+  glBindVertexArray(meshVAO);
+
+  /* Create and enable the Vertex's Position pointer/attribute */
+  posAttrib = glGetAttribLocation(shaderProgram, "vPosition");
+  glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, position)));
+  glEnableVertexAttribArray(posAttrib);
+
+  /* Create and enable the Vertex's UV position pointer/attribute */
+  uvAttrib = glGetAttribLocation(shaderProgram, "uv");
+  glVertexAttribPointer(uvAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, uv)));
+  glEnableVertexAttribArray(uvAttrib);
+
+  /* Create and enable the Vertex's Color position pointer/attribute */
+  colorAttrib = glGetAttribLocation(shaderProgram, "color");
+  glVertexAttribPointer(colorAttrib, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, color)));
+  glEnableVertexAttribArray(colorAttrib);
+
+  /* Create and enable the Vertex's Normal position pointer/attribute */
+  normalAttrib = glGetAttribLocation(shaderProgram, "normal");
+  glVertexAttribPointer(normalAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(offsetof(Vertex, normal)));
+  glEnableVertexAttribArray(normalAttrib);
+
+  /* set/bind everything back to the OpenGL's default state? */
+  //glDisableVertexAttribArray(posAttrib);
+  //glDisableVertexAttribArray(uvAttrib);
+  //glDisableVertexAttribArray(colorAttrib);
+  //glDisableVertexAttribArray(normalAttrib);
+  glBindVertexArray(NULL);
 }
+
 Shader::Shader(GLuint shaderIndex)
 :shaderProgram(shaderIndex)
 {
