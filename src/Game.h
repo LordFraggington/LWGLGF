@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015, Clayton Andrews.
+ * Copyright 2014-2016, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,8 @@
 #ifndef GAME_H
 #define GAME_H
 #include <stdio.h> //used to access stderr
-#define GLEW_STATIC// needed for GLEW to be linked statically
-#include <GL/glew.h>//included in Mesh as well; removing the include here will cause problems though...
-#include <GLFW/glfw3.h>//window handling
+#include <GL/glew.h>//included in Mesh and Shader (required to expose GLint)
+#include <GLFW/glfw3.h>//Window handling/creation library
 #include "ResourceManager.h"//contains Mesh, GameObject, Camera, and GLM references
 
 class Game

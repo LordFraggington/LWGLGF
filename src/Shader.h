@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 - 2015, Clayton Andrews.
+ * Copyright 2014 - 2016, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,7 @@
 #pragma once
 #ifndef SHADER_H
 #define SHADER_H
-#define GLEW_STATIC
-#include <GL/glew.h>//needed for buffer creation and GLints -- also in Game and Mesh
+#include <GL/glew.h>//needed for buffer creation and GLints -- also present in Game and Mesh
 #include "Vertex.h"
 
 /*

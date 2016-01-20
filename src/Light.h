@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 - 2015, Clayton Andrews.
+ * Copyright 2014 - 2016, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ TODO:
 class Light
 {
 	public:
-	    enum LightType{Ambient, Point, Directional, Spotlight};//TODO: Add volumetric; area lighting in most engines involves baking the lightmap...
+		enum LightType{Ambient, Point, Directional, Spotlight};//TODO: Add volumetric lighting; area lighting in most engines involves baking the lightmap...
 
 		Light(Transform* aTransform = NULL, LightType lightType = LightType::Ambient, glm::vec4 inColor = glm::vec4(1,1,1,1), glm::vec3 intensities = glm::vec3(1,1,1), float range = 0, float angle = 0);
 		~Light(void);

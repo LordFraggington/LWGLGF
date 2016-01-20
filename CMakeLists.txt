@@ -1,4 +1,4 @@
-# Copyright 2014 - 2015, Clayton Andrews.
+# Copyright 2014 - 2016, Clayton Andrews.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -20,16 +20,8 @@
 
 cmake_minimum_required(VERSION 2.8)
 
-#define the project name and type
+#Define the project name (and type, if desired)
 project(LWGLGF)
 
-#set file path for custom Find*.cmake modules
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${LWGLGF_SOURCE_DIR}/cmake/")
-
-#set the project version number
-set(LWGLGF_VERSION_MAJOR 0)
-set(LWGLGF_VERSION_MINOR 1)
-set(LWGLGF_VERSION_PATCH 0)
-
-#everything else is processed in here
+#Everything else is set in the CMakeLists.txt file in the src subdirectory
 add_subdirectory(${LWGLGF_SOURCE_DIR}/src)

@@ -7,9 +7,9 @@ possible, to both draw from and hopefully give back to the open source community
 
 ##Project Dependencies:
 
-This project utilizes CMake (www.cmake.org) to generate and find the files needed to compile a LWGLGF-derivative game.
+This project utilizes CMake (www.cmake.org) to generate and find the files needed to compile a LWGLGF-derivative game. Premake support is planned, but at this time unfinished.
 
-Please B.Y.O.B. (Bring your own binaries)! The list of the libraries used is provided at the end of this ReadMe, but you'll need to create your own binaries/libraries for your OS/compiler pairing of choice.
+Please B.Y.O.B. (Bring your own binaries)! The list of the libraries used is provided at the end of this ReadMe, but you'll need to create your own binaries/libraries for your OS/compiler pairing of choice. Eventually the project will utilize Git submodules (hopefully) to provide developers and contributors with the source code for the external libraries being used, but as of yet this is untested.
 
 ##Setting up the project for use:
 
@@ -29,7 +29,7 @@ The LWGLGF source code is to be freely distributed under the MIT License. Each s
 
 ##External Libraries Found at:
 
-GLM (http://glm.g-truc.net/0.9.6/index.html)
+GLM (http://glm.g-truc.net)
 
 GLEW (http://glew.sourceforge.net/)
 
@@ -39,6 +39,6 @@ GLFW (http://www.glfw.org/)
 
 OpenSubdiv (https://github.com/PixarAnimationStudios/OpenSubdiv) - FindGLFW and FindGLEW (found in their /cmake)
 
-GLM (http://glm.g-truc.net/0.9.6/index.html) - FindGLM (found in their /utils)
+GLM (https://github.com/g-truc/glm) - FindGLM (found in their /utils).
 
-Said files are found in the /cmake directory and are subject to the terms of their own licenses/rights holders.
+Said files are found in the /cmake directory of LWGLGF and are subject to the terms of their own licenses/rights holders.

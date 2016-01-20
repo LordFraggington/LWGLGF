@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015, Clayton Andrews.
+ * Copyright 2014-2016, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -138,9 +138,10 @@ void Game::Update()
   //int xpos, ypos;
   //reset mouse position to the center of screen
 
-  //calculate angles
-  if((glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS))//quit
+	//Quit the application
+	if((glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS))
     glfwSetWindowShouldClose(window, GL_TRUE);
+  //Calculate Camera orientation based on user input
   if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     camera->Translate(camera->Right(), 20 * deltaTime);//this SHOULD be negative
   if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)

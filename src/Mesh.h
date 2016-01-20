@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 - 2015, Clayton Andrews.
+ * Copyright 2014 - 2016, Clayton Andrews.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#define GLEW_STATIC
-#include <GL/glew.h>//needed for buffer creation and GLints -- also found in Game.cpp
+#include <GL/glew.h>//needed for buffer creation and GLints -- also found in Game and Shader
 #include "Vertex.h"
 
 class Mesh
