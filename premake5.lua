@@ -34,11 +34,12 @@ workspace "LWGLGF"
 
 project "LWGLGF"
   files { "src/*.cpp", "src/*.h"}
-  includedirs {"extern/glew", "extern/glm", "extern/glfw"} -- this actually is going to be different if using git submodules
+  includedirs {"extern/glew", "extern/glm", "extern/glfw/include/GLFW"}
   kind "WindowedApp"
   filter "system:windows"
-    links{ "glew32" }
+    links{ "glew32", "glfw3", "opengl32"}
   filter "system:linux"
     links{"GL", "X11", "Xrandr", "glfw3", "GLEW"}
   filter "system:macosx"
     --Mac linkage to be inserted here
+      links{ }

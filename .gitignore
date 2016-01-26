@@ -3,6 +3,9 @@
 # been merged with minor modification and are subject to their original MIT
 # license.
 
+#Do not commit the submodule subfolder (extern/)
+extern/
+
 #CMake Ignored Files
 CMakeCache.txt
 CMakeFiles
